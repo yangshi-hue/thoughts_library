@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Thoughts Library</title>
-    </head>
-    <body>
-        <h1> Thoughts Library</h1>
-        <p>Book reviews and random thoughts space.</p>
-    </body>
+<head>
+    <title>Thoughts Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1> Thoughts Library</h1>
+    <p>Book reviews, favorite lines, and random thoughts.</p>
+
+    <div class="review-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+            {% if review.cover_image %}
+            <img src="{{ review.cover_image }}" alt="{{ review.title }} cover">
+            {% endif %}
+            <h2>{{ review.title }}</h2>
+            <p><em>by {{ review.author }}</em></p>
+            <p>{{ review.review_text[:150] }}...</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
 </html>
