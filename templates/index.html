@@ -4,8 +4,15 @@
     <title>Thoughts Library</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+<a href="{{ url_for('admin_login') }}" style="position: fixed; bottom: 10px; right: 10px; width: 20px; height: 20px; display: block; opacity: 0.15; text-decoration: none;">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="#555">
+        <path d="M12 2l2.9 6.9L22 9.6l-5.5 4.8L18.2 22 12 17.8 5.8 22l1.7-7.6L2 9.6l7.1-0.7z"/>
+    </svg>
+</a>
+
+
 <body>
-    <h1> Thoughts Library</h1>
+<h1> Thoughts Library</h1>
     <p>Book reviews, favorite lines, and random thoughts.</p>
 
     <div class="review-grid">
