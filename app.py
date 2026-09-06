@@ -71,6 +71,32 @@ def admin_login():
 def admin_logout():
     logout_user()
     return redirect(url_for('home'))
-
+@app.route('/admin/new-review', methods=['GET', 'POST'])
+@login_required
+def new_review():
+    if request.method == 'POST':
+        review = Review(
+            title=request.form.get('title'),
+            author=request.form.get('author'),
+            review_text=request.form.get('review_text'),
+            favorite_quote=request.form.get('favorite_quote'),
+            cover_image=request.form.get('cover_image')
+        )
+        db.session.add(review)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('new_review.html')
+@app.route('/admin/new-journal', methods=['GET', 'POST'])
+@login_required
+def new_journal():
+    if request.method == 'POST':
+        entry = JournalEntry(
+            title=request.form.get('title'),
+            body=request.form.get('body')
+        )
+        db.session.add(entry)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('new_journal.html')
 if __name__ == '__main__':
     app.run(debug=True)

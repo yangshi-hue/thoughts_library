@@ -1,3 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 15px;
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
 body {
     font-family: Georgia, serif;
     max-width: 900px;
@@ -31,4 +47,55 @@ h1 {
     object-fit: cover;
     border-radius: 6px;
     margin-bottom: 10px;
+}
+form input[type="text"],
+form textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: block;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #555;
+}
+.back-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    background-color: #333;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.back-btn:hover {
+    background-color: #555;
 }
