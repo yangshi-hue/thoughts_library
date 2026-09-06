@@ -14,7 +14,7 @@
             {% if review.cover_image %}
             <img src="{{ review.cover_image }}" alt="{{ review.title }} cover">
             {% endif %}
-            <h2>{{ review.title }}</h2>
+            <h2><a href="{{ url_for('review_detail', review_id=review.id) }}">{{ review.title }}</a></h2>
             <p><em>by {{ review.author }}</em></p>
             <p>{{ review.review_text[:150] }}...</p>
         </div>

@@ -27,6 +27,10 @@ class JournalEntry(db.Model):
 def home():
     reviews = Review.query.order_by(Review.date_added.desc()).all()
     return render_template('index.html', reviews=reviews)
+@app.route('/review/<int:review_id>')
+def review_detail(review_id):
+    review = Review.query.get_or_404(review_id)
+    return render_template('review_detail.html', review=review)
 
 if __name__ == '__main__':
     app.run(debug=True)

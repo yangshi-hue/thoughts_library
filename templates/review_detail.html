@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ review.title }} — Thoughts Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('home') }}">← Back to Thoughts Library</a>
+
+    <h1>{{ review.title }}</h1>
+    <p><em>by {{ review.author }}</em></p>
+
+    {% if review.cover_image %}
+    <img src="{{ review.cover_image }}" alt="{{ review.title }} cover" style="max-width: 300px;">
+    {% endif %}
+
+    <p>{{ review.review_text }}</p>
+
+    {% if review.favorite_quote %}
+    <blockquote>"{{ review.favorite_quote }}"</blockquote>
+    {% endif %}
+</body>
+</html>
