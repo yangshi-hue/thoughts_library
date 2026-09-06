@@ -98,5 +98,18 @@ def new_journal():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('new_journal.html')
+@app.route('/journal')
+def journal():
+    entries = JournalEntry.query.order_by(JournalEntry.date_posted.desc()).all()
+    return render_template('journal.html', entries=entries)
+
+@app.route('/quotes')
+def quotes():
+    reviews = Review.query.filter(Review.favorite_quote.isnot(None), Review.favorite_quote != '').all()
+    return render_template('quotes.html', reviews=reviews)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 if __name__ == '__main__':
     app.run(debug=True)
