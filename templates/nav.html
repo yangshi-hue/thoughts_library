@@ -1,6 +1,16 @@
 <div class="sidebar">
-    <a href="{{ url_for('about') }}" class="sidebar-icon" aria-label="About author">👤</a>
-    <a href="{{ url_for('home') }}" class="pill">Book reviews</a>
-    <a href="{{ url_for('journal') }}" class="pill">Random thoughts</a>
-    <a href="{{ url_for('quotes') }}" class="pill">Good lines</a>
+    <a href="{{ url_for('about') }}" class="sidebar-icon" aria-label="About author">
+        {% set info = about_info %}
+        {% if info and info.photo_url %}
+        <img src="{{ info.photo_url }}" alt="Author">
+        {% else %}
+        👤
+        {% endif %}
+    </a>
+
+    <div class="pill-group">
+        <a href="{{ url_for('home') }}" class="pill">Book reviews</a>
+        <a href="{{ url_for('journal') }}" class="pill">Random thoughts</a>
+        <a href="{{ url_for('quotes') }}" class="pill">Good lines</a>
+    </div>
 </div>
