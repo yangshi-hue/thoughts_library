@@ -108,8 +108,29 @@ def quotes():
     reviews = Review.query.filter(Review.favorite_quote.isnot(None), Review.favorite_quote != '').all()
     return render_template('quotes.html', reviews=reviews)
 
+class AboutInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bio = db.Column(db.Text)
+    photo_url = db.Column(db.String(300))
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    info = AboutInfo.query.first()
+    return render_template('about.html', info=info)
+
+@app.route('/admin/edit-about', methods=['GET', 'POST'])
+@login_required
+def edit_about():
+    info = AboutInfo.query.first()
+    if not info:
+        info = AboutInfo()
+        db.session.add(info)
+
+    if request.method == 'POST':
+        info.bio = request.form.get('bio')
+        info.photo_url = request.form.get('photo_url')
+        db.session.commit()
+        return redirect(url_for('about'))
+
+    return render_template('edit_about.html', info=info)
 if __name__ == '__main__':
     app.run(debug=True)

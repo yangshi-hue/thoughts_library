@@ -1,1 +1,20 @@
 {% include 'nav.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About — Thoughts Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% include 'nav.html' %}
+
+    <h1>About</h1>
+    {% if info and info.photo_url %}
+    <img src="{{ info.photo_url }}" alt="Author photo" class="author-photo">
+    {% endif %}
+    <p>{{ info.bio if info and info.bio else "This section hasn't been filled in yet." }}</p>
+
+    <a href="{{ url_for('home') }}" class="back-btn" aria-label="Back to homepage">←</a>
+</body>
+</html>

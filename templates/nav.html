@@ -1,8 +1,6 @@
-<nav class="top-nav">
-    <a href="{{ url_for('home') }}">Thoughts Library</a>
-    <div class="nav-links">
-        <a href="{{ url_for('journal') }}">Journal</a>
-        <a href="{{ url_for('quotes') }}">Favorite Quotes</a>
-        <a href="{{ url_for('about') }}">About</a>
-    </div>
-</nav>
+<div class="sidebar">
+    <a href="{{ url_for('about') }}" class="sidebar-icon" aria-label="About author">👤</a>
+    <a href="{{ url_for('home') }}" class="pill">Book reviews</a>
+    <a href="{{ url_for('journal') }}" class="pill">Random thoughts</a>
+    <a href="{{ url_for('quotes') }}" class="pill">Good lines</a>
+</div>
