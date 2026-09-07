@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit About — Thoughts Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Edit About Section</h1>
+    <form method="POST">
+        <input type="text" name="photo_url" placeholder="Photo URL" value="{{ info.photo_url or '' }}"><br><br>
+        <textarea name="bio" placeholder="Tell readers about yourself..." rows="10">{{ info.bio or '' }}</textarea><br><br>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{{ url_for('home') }}" class="back-btn" aria-label="Back to homepage">←</a>
+</body>
+</html>
