@@ -1,16 +1,16 @@
-<div class="sidebar">
-    <a href="{{ url_for('about') }}" class="sidebar-icon" aria-label="About author">
-        {% set info = about_info %}
-        {% if info and info.photo_url %}
-        <img src="{{ info.photo_url }}" alt="Author">
+<div class="top-right">
+    <a href="{{ url_for('about') }}" class="author-link" aria-label="About author">
+        {% if about_info and about_info.photo_url %}
+        <img src="{{ about_info.photo_url }}" alt="Author">
         {% else %}
-        👤
+        <span class="author-icon">👤</span>
         {% endif %}
+        <span class="author-label">About Author</span>
     </a>
+</div>
 
-    <div class="pill-group">
-        <a href="{{ url_for('home') }}" class="pill">Book reviews</a>
-        <a href="{{ url_for('journal') }}" class="pill">Random thoughts</a>
-        <a href="{{ url_for('quotes') }}" class="pill">Good lines</a>
-    </div>
+<div class="side-menu">
+    <a href="{{ url_for('home') }}" class="pill">Book reviews</a>
+    <a href="{{ url_for('journal') }}" class="pill">Random thoughts</a>
+    <a href="{{ url_for('quotes') }}" class="pill">Good lines</a>
 </div>
