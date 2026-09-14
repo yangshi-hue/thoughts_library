@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Thoughts — Thoughts Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% include 'nav.html' %}
+
+    <h1>Random Thoughts</h1>
+
+    <div class="review-grid">
+        {% for entry in entries %}
+        <div class="review-card">
+            <h2>{{ entry.title }}</h2>
+            <p>{{ entry.body }}</p>
+        </div>
+        {% else %}
+        <p>No journal entries yet.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('home') }}" class="back-btn" aria-label="Back to homepage">←</a>
+</body>
+</html>
