@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Good Lines — Thoughts Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 {% include 'nav.html' %}
+
+    <h1>Good Lines</h1>
+
+    <div class="review-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+            <blockquote>"{{ review.favorite_quote }}"</blockquote>
+            <p><em>— from {{ review.title }} by {{ review.author }}</em></p>
+        </div>
+        {% else %}
+        <p>No favorite quotes saved yet.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('home') }}" class="back-btn" aria-label="Back to homepage">←</a>
+</body>
+</html>
