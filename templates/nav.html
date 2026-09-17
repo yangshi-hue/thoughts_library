@@ -14,3 +14,11 @@
     <a href="{{ url_for('journal') }}" class="pill">Random thoughts</a>
     <a href="{{ url_for('quotes') }}" class="pill">Good lines</a>
 </div>
+<!---admin only links = this will be visible only admin which means
+only when i logged in-->
+<div class = "admin-bar">
+    <a href = "{{url_for('new_review')}} " class = "admin_link"> + New revie</a>
+    <a href ="{{url_for('new_journal')}}" class = "admin-link">+ New thought</a>
+    <a href = "{{url_for('edit_about')}}" class="admin-link">+ Edit about</a>
+    <a href ="{{url_for ('admin_logout')}}" class ="admin-link">Log out</a>
+</div>
