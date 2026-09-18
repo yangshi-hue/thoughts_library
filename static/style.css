@@ -341,7 +341,7 @@ form button:hover {
 /* ============styling the admin bar ============ */
 .admin-bar {
     position: fixed;
-    top: 20px;
+    top: 260px;
     left: 30px;
     display: flex;
     flex-direction: column;

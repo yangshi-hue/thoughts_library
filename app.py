@@ -29,6 +29,8 @@ def load_user(user_id):
         return AdminUser()
     return None
 
+# --- Models ---
+
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
@@ -46,6 +48,19 @@ class JournalEntry(db.Model):
     body = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
+class AboutInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bio = db.Column(db.Text)
+    photo_url = db.Column(db.String(300))
+
+# --- Make about_info available to every template (used in nav.html) ---
+
+@app.context_processor
+def inject_about_info():
+    return {'about_info': AboutInfo.query.first()}
+
+# --- Public routes ---
+
 @app.route('/')
 def home():
     reviews = Review.query.order_by(Review.date_added.desc()).all()
@@ -55,6 +70,24 @@ def home():
 def review_detail(review_id):
     review = Review.query.get_or_404(review_id)
     return render_template('review_detail.html', review=review)
+
+@app.route('/journal')
+def journal():
+    entries = JournalEntry.query.order_by(JournalEntry.date_posted.desc()).all()
+    return render_template('journal.html', entries=entries)
+
+@app.route('/quotes')
+def quotes():
+    reviews = Review.query.filter(Review.favorite_quote.isnot(None), Review.favorite_quote != '').all()
+    return render_template('quotes.html', reviews=reviews)
+
+@app.route('/about')
+def about():
+    info = AboutInfo.query.first()
+    return render_template('about.html', info=info)
+
+# --- Admin auth ---
+
 @app.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
@@ -71,6 +104,9 @@ def admin_login():
 def admin_logout():
     logout_user()
     return redirect(url_for('home'))
+
+# --- Admin content management ---
+
 @app.route('/admin/new-review', methods=['GET', 'POST'])
 @login_required
 def new_review():
@@ -86,6 +122,7 @@ def new_review():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('new_review.html')
+
 @app.route('/admin/new-journal', methods=['GET', 'POST'])
 @login_required
 def new_journal():
@@ -98,24 +135,6 @@ def new_journal():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('new_journal.html')
-@app.route('/journal')
-def journal():
-    entries = JournalEntry.query.order_by(JournalEntry.date_posted.desc()).all()
-    return render_template('journal.html', entries=entries)
-
-@app.route('/quotes')
-def quotes():
-    reviews = Review.query.filter(Review.favorite_quote.isnot(None), Review.favorite_quote != '').all()
-    return render_template('quotes.html', reviews=reviews)
-
-class AboutInfo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    bio = db.Column(db.Text)
-    photo_url = db.Column(db.String(300))
-@app.route('/about')
-def about():
-    info = AboutInfo.query.first()
-    return render_template('about.html', info=info)
 
 @app.route('/admin/edit-about', methods=['GET', 'POST'])
 @login_required
@@ -132,5 +151,28 @@ def edit_about():
         return redirect(url_for('about'))
 
     return render_template('edit_about.html', info=info)
+
+@app.route('/review/<int:review_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_review(review_id):
+    review = Review.query.get_or_404(review_id)
+    if request.method == 'POST':
+        review.title = request.form.get('title')
+        review.author = request.form.get('author')
+        review.review_text = request.form.get('review_text')
+        review.favorite_quote = request.form.get('favorite_quote')
+        review.cover_image = request.form.get('cover_image')
+        db.session.commit()
+        return redirect(url_for('review_detail', review_id=review.id))
+    return render_template('edit_review.html', review=review)
+
+@app.route('/review/<int:review_id>/delete', methods=['POST'])
+@login_required
+def delete_review(review_id):
+    review = Review.query.get_or_404(review_id)
+    db.session.delete(review)
+    db.session.commit()
+    return redirect(url_for('home'))
+
 if __name__ == '__main__':
     app.run(debug=True)
